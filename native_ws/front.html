@@ -1,0 +1,10 @@
+<script>
+    let ws = new WebSocket('ws://localhost:8000/');
+    console.log(ws);
+
+    ws.onmessage = message => {
+        console.log(message.data);
+
+        ws.send('Hello from the client!, i got you message');
+    };
+</script>
