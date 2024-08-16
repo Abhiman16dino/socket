@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+   <script src="/socket.io/socket.io.js"></script>      <!-- This file is automatically addded by socket io server -->
+
+    <script>
+        // io is now added to the global scope by socket.io.js, can also be accessed by window.io
+        // console.log(io);
+        const socket = io('http://localhost:8000');  //socket object created
+        // console.log(socket);
+
+        socket.on('connect', () => {    // listen, it we run every time for reconnect also. So dont use any emit or listen here untill unless required by design
+            console.log(socket.id);
+        });
+
+        socket.on('messageFromServer' , (data) => {
+            console.log(data);
+        })
+
+        socket.io.on('reconnect', (attemptNumber) => { // reconnect event belongs to manager ie soket.io and not socket. Will discuss later
+            console.log(attemptNumber);
+        });
+
+        socket.emit('messageFromClient', {data: 'Hello, from the browser'});  // emit
+
+    </script>
+
+</body>
+</html>
